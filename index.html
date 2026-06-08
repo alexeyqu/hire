@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Alex Kulikov — Senior Backend / Platform Engineer for AI &amp; Data Infrastructure. Consulting &amp; contract engagements.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <title>Alex Kulikov — Consulting</title>
+    <style>
+        :root {
+            --bg: #0A0908;
+            --text: #F0EBE3;
+            --muted: #918D88;
+            --faint: #242220;
+            --accent: #C4A472;
+            --border: rgba(196, 164, 114, 0.18);
+            --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #FAF8F5;
+                --text: #1A1714;
+                --muted: #6B6760;
+                --faint: #E0DBD4;
+                --accent: #8B6A3E;
+                --border: rgba(139, 106, 62, 0.28);
+            }
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: radial-gradient(ellipse at 30% 20%, #161412 0%, #0A0908 65%);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 6vw, 5rem);
+            padding-bottom: 4.5rem;
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background-image: radial-gradient(ellipse at 30% 20%, #F5F0E8 0%, #FAF8F5 65%);
+            }
+        }
+
+        @media (min-width: 769px) {
+            body {
+                padding-bottom: clamp(2rem, 6vh, 4rem);
+            }
+        }
+
+        /* Noise overlay */
+        .noise {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.035;
+            z-index: 100;
+        }
+
+        /* ===== PAGE WRAPPER ===== */
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        .page-header {
+            border-left: 1px solid var(--border);
+            padding-left: 1.75rem;
+            margin-bottom: 2.75rem;
+            animation: fadeUp 0.65s ease both;
+        }
+
+        .doc-label {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .doc-label a {
+            color: var(--muted);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s ease;
+        }
+
+        .doc-label a:hover { color: var(--accent); }
+
+        h1.name {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+        }
+
+        .tagline {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: var(--text);
+            letter-spacing: 0.03em;
+            margin-bottom: 0.3rem;
+        }
+
+        .sub-tagline {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0;
+            list-style: none;
+        }
+
+        .contact-links a,
+        .contact-links .loc {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            font-weight: 300;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            text-decoration: none;
+            padding: 0.3rem 0.75rem 0.3rem 0;
+            transition: color 0.2s ease;
+        }
+
+        .contact-links a:hover { color: var(--accent); }
+
+        .contact-links .sep {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            color: var(--faint);
+            padding: 0.3rem 0.6rem 0.3rem 0;
+            user-select: none;
+        }
+
+        /* ===== TWO-COLUMN GRID ===== */
+        .columns {
+            display: grid;
+            grid-template-columns: minmax(0, 63fr) minmax(0, 34fr);
+            gap: clamp(2rem, 5vw, 5rem);
+            align-items: start;
+            animation: fadeUp 0.65s ease 0.15s both;
+        }
+
+        @media (max-width: 768px) {
+            .columns {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+        }
+
+        /* ===== COLUMN ===== */
+        .col {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            border-left: 1px solid var(--border);
+            padding-left: 1.75rem;
+        }
+
+        /* ===== SECTION LABEL ===== */
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 400;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.9rem;
+        }
+
+        /* ===== BODY TEXT ===== */
+        .body-text {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 300;
+            color: var(--text);
+            letter-spacing: 0.02em;
+            line-height: 1.7;
+        }
+
+        /* ===== BULLET LIST ===== */
+        ul.item-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        ul.item-list li {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 300;
+            color: var(--text);
+            letter-spacing: 0.02em;
+            line-height: 1.65;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        ul.item-list li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        ul.item-list li a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s ease;
+        }
+
+        ul.item-list li a:hover { color: var(--accent); }
+
+        /* ===== EXPERIENCE BLOCK ===== */
+        .exp-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .exp-header {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 300;
+            letter-spacing: 0.04em;
+            line-height: 1.4;
+        }
+
+        .exp-company {
+            font-weight: 400;
+            color: var(--text);
+        }
+
+        .exp-role {
+            color: var(--accent);
+        }
+
+        .exp-location {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+            line-height: 1.5;
+        }
+
+        .exp-location a {
+            color: var(--muted);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s ease;
+        }
+
+        .exp-location a:hover { color: var(--accent); }
+
+        .exp-sub {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.03em;
+            line-height: 1.5;
+            margin-top: 0.25rem;
+        }
+
+        .exp-sub a {
+            color: var(--muted);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s ease;
+        }
+
+        .exp-sub a:hover { color: var(--accent); }
+
+        .exp-divider {
+            height: 1px;
+            background: var(--faint);
+            margin: 0.5rem 0;
+        }
+
+        /* ===== TALKS ===== */
+        .talks-table {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.35rem 1.25rem;
+            align-items: start;
+        }
+
+        .talk-date {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            padding-top: 0.1rem;
+        }
+
+        .talk-name {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 400;
+            color: var(--text);
+            letter-spacing: 0.03em;
+        }
+
+        .talk-name a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .talk-name a:hover { color: var(--accent); }
+
+        blockquote.talk-quote {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+            line-height: 1.65;
+            border-left: 2px solid var(--accent);
+            padding-left: 0.85rem;
+        }
+
+        /* ===== SERVICE BLOCKS (right col) ===== */
+        .service-block {
+            margin-bottom: 0.95rem;
+        }
+
+        .service-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-name {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 400;
+            color: var(--text);
+            letter-spacing: 0.04em;
+        }
+
+        .service-duration {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 300;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+            margin-bottom: 0.2rem;
+        }
+
+        .service-desc {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+            line-height: 1.55;
+        }
+
+        /* ===== SKILL GROUPS ===== */
+        .skill-group {
+            margin-bottom: 0.8rem;
+        }
+
+        .skill-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-group-name {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            font-weight: 400;
+            color: var(--text);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.2rem;
+        }
+
+        .skill-list {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+            line-height: 1.6;
+        }
+
+        /* ===== AVAILABILITY ===== */
+        .avail-text {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 300;
+            color: var(--text);
+            letter-spacing: 0.02em;
+            line-height: 1.75;
+        }
+
+        .avail-text a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .avail-text a:hover {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        /* ===== FOOTER ===== */
+        .page-footer {
+            margin-top: 3rem;
+            border-top: 1px solid var(--faint);
+            padding-top: 1.5rem;
+            display: flex;
+            gap: 0.25rem 1.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+            animation: fadeUp 0.65s ease 0.3s both;
+        }
+
+        .footer-link {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 300;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.25rem 0;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover { color: var(--accent); }
+
+        .footer-link svg {
+            width: 11px;
+            height: 11px;
+            flex-shrink: 0;
+        }
+
+        /* ===== MOBILE STICKY CTA ===== */
+        .mobile-cta {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-cta {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                background-color: var(--accent);
+                padding: 0.95rem 1.5rem;
+            }
+
+            .mobile-cta a {
+                font-family: var(--font-mono);
+                font-size: 0.72rem;
+                font-weight: 400;
+                letter-spacing: 0.1em;
+                color: var(--bg);
+                text-decoration: none;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <svg class="noise" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+            <feColorMatrix type="saturate" values="0"/>
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noise)"/>
+    </svg>
+
+    <div class="mobile-cta" aria-label="Contact">
+        <a href="mailto:hire@lxqu.dev">hire@lxqu.dev</a>
+    </div>
+
+    <div class="page">
+
+        <header class="page-header">
+            <p class="doc-label">Consulting / Contract One-Pager &nbsp;&middot;&nbsp; Full career CV: <a href="https://lxqu.dev/cv" target="_blank" rel="noopener noreferrer">lxqu.dev/cv</a></p>
+            <h1 class="name">Alex Kulikov</h1>
+            <p class="tagline">Senior Backend / Platform Engineer for AI &amp; Data Infrastructure</p>
+            <p class="sub-tagline">Ex-Meta &thinsp;&middot;&thinsp; Founding engineer experience &thinsp;&middot;&thinsp; Context / Retrieval / Agents &thinsp;&middot;&thinsp; Cloud / Terraform / Reliability</p>
+            <nav class="contact-links" aria-label="Contact links">
+                <a href="mailto:hire@lxqu.dev">hire@lxqu.dev</a>
+                <span class="sep">|</span>
+                <a href="https://lxqu.dev/" target="_blank" rel="noopener noreferrer">lxqu.dev</a>
+                <span class="sep">|</span>
+                <a href="https://linkedin.com/in/alexeyqu" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <span class="sep">|</span>
+                <a href="https://github.com/alexeyqu" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <span class="sep">|</span>
+                <span class="loc">London, UK</span>
+            </nav>
+        </header>
+
+        <div class="columns">
+
+            <!-- LEFT COLUMN -->
+            <div class="col">
+
+                <section>
+                    <h2 class="section-label">Positioning</h2>
+                    <p class="body-text">
+                        I'm strongest when a prototype works but the underlying system is becoming hard to extend, debug, operate, or explain.<br><br>
+                        I help early-stage AI/data teams build and harden the backend infrastructure their products run on — data pipelines, context and retrieval systems, agent backends, and the cloud infrastructure underneath them.<br><br>
+                        Recent work includes: user-data ETL, GDPR data exports, embeddings, agent backends, AWS/GCP, Terraform, observability, audit-ready infrastructure.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="section-label">What I Solve</h2>
+                    <ul class="item-list">
+                        <li>AI prototype works, but backend/data/cloud architecture is fragile.</li>
+                        <li>Data ingestion is messy, brittle, or hard to extend.</li>
+                        <li>Context, retrieval, embeddings, or agents need production-grade foundations.</li>
+                        <li>Cloud infrastructure grew organically and now lacks reproducibility or visibility.</li>
+                        <li>A founder/CTO needs senior backend/platform ownership before hiring full-time.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="section-label">Selected Experience</h2>
+
+                    <div class="exp-block">
+                        <p class="exp-header">
+                            <span class="exp-company">onFabric</span>
+                            <span class="exp-role"> | Founding Engineer</span>
+                        </p>
+                        <p class="exp-location">August 2025 – April 2026 &nbsp;&middot;&nbsp; <a href="https://onfabric.io/" target="_blank" rel="noopener noreferrer">onfabric.io</a></p>
+                        <ul class="item-list">
+                            <li>Reworked Meta data ingestion into a FastAPI/ECS pipeline with idempotent GCS-backed staged processing, ZIP batching and BDD coverage.</li>
+                            <li>Owned multi-cloud infrastructure across AWS/GCP in Terraform: ECS, RDS, GCS, Vertex AI, Cloud Run, CloudWatch and IAM/OIDC.</li>
+                        </ul>
+                        <p class="exp-sub">case study: <strong>context-use</strong> | AI memory from GDPR data exports.</p>
+                        <p class="exp-sub"><a href="https://context-use.com/" target="_blank" rel="noopener noreferrer">context-use.com</a> &nbsp;&middot;&nbsp; <a href="https://github.com/onfabric/context-use/" target="_blank" rel="noopener noreferrer">GitHub repo</a></p>
+                        <ul class="item-list">
+                            <li>Built a provider-based ETL layer that normalises GDPR data exports from any platform into structured personal context for LLMs and agents — deployed to onFabric infrastructure, processing real user data at scale.</li>
+                            <li>Designed for extensibility: new providers added via single-prompt codegen against a durable schema; shipped with 7 data providers (Airbnb, ChatGPT, Claude, Google, Instagram, Netflix, Telegram).</li>
+                        </ul>
+                    </div>
+
+                    <div class="exp-divider"></div>
+
+                    <div class="exp-block">
+                        <p class="exp-header">
+                            <span class="exp-company">Lerno</span>
+                            <span class="exp-role"> | Senior Software Engineer, Contract / Part-time</span>
+                        </p>
+                        <p class="exp-location">May 2025 – December 2025 &nbsp;&middot;&nbsp; <a href="https://lerno.ai/" target="_blank" rel="noopener noreferrer">lerno.ai</a></p>
+                        <ul class="item-list">
+                            <li>Built and shipped a streaming LangGraph agent over meeting transcripts.</li>
+                            <li>Owned the engineering SOC 2 readiness stream, including migration of AWS infrastructure to Terraform, infrastructure reproducibility, and documentation.</li>
+                        </ul>
+                    </div>
+
+                    <div class="exp-divider"></div>
+
+                    <div class="exp-block">
+                        <p class="exp-header">
+                            <span class="exp-company">Meta</span>
+                            <span class="exp-role"> | Senior Software Engineer</span>
+                        </p>
+                        <p class="exp-location">February 2020 – August 2024 &nbsp;&middot;&nbsp; London, UK</p>
+                        <ul class="item-list">
+                            <li>Led a 6-person reliability workstream on the <a href="https://dtinit.org/docs/dtp-what-is-it" target="_blank" rel="noopener noreferrer">Data Transfer Project</a>.</li>
+                            <li>Achieved a 10x drop in DTP failure rate and overhauled the monitoring pipeline.</li>
+                            <li>Prepared the DTP infrastructure for compliance with EU Digital Markets Act.</li>
+                        </ul>
+                    </div>
+
+                    <div class="exp-divider"></div>
+
+                    <div class="exp-block">
+                        <p class="exp-header">
+                            <span class="exp-company">Sysblok</span>
+                            <span class="exp-role"> | Head of Engineering</span>
+                        </p>
+                        <p class="exp-location">Since November 2023 &nbsp;&middot;&nbsp; <a href="https://www.linkedin.com/company/sysblok/" target="_blank" rel="noopener noreferrer">LinkedIn page</a> &nbsp;&middot;&nbsp; <a href="https://sysblok.ru/" target="_blank" rel="noopener noreferrer">sysblok.ru</a></p>
+                        <ul class="item-list">
+                            <li>Leading engineering for a nonprofit media project with 170k subscribers; team of 5, backlog, internal tooling and AI workflow automation.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-label">Talks</h2>
+                    <div class="talks-table">
+                        <span class="talk-date">May 2026</span>
+                        <span class="talk-name"><a href="https://lxqu.dev/talks/cccl-6/" target="_blank" rel="noopener noreferrer">Claude Code Central London</a></span>
+
+                        <span class="talk-date">March 2026</span>
+                        <span class="talk-name"><a href="https://lxqu.dev/talks/ai-tinkerers-openclaw/" target="_blank" rel="noopener noreferrer">AI Tinkerers London</a></span>
+
+                        <span class="talk-date"></span>
+                        <blockquote class="talk-quote">"My 3-day-old OpenClaw knew more about me than most people do — from my 3-year choir streak to my recent Terraform headaches."</blockquote>
+                    </div>
+                </section>
+
+            </div><!-- /left col -->
+
+            <!-- RIGHT COLUMN -->
+            <div class="col">
+
+                <section>
+                    <h2 class="section-label">How I Help</h2>
+                    <div class="service-block">
+                        <p class="service-name">Architecture Audit</p>
+                        <p class="service-duration">1–2 weeks</p>
+                        <p class="service-desc">Backend / data / cloud review, risk map, prioritized roadmap.</p>
+                    </div>
+                    <div class="service-block">
+                        <p class="service-name">Hardening Sprint</p>
+                        <p class="service-duration">2–6 weeks</p>
+                        <p class="service-desc">Observability, reliability, deployment cleanup, maintainability, developer experience.</p>
+                    </div>
+                    <div class="service-block">
+                        <p class="service-name">Data / Context Pipeline</p>
+                        <p class="service-duration">Scoped per engagement</p>
+                        <p class="service-desc">ETL, enrichment, embeddings, search APIs.</p>
+                    </div>
+                    <div class="service-block">
+                        <p class="service-name">Cloud / Terraform</p>
+                        <p class="service-duration">Scoped per engagement</p>
+                        <p class="service-desc">Infrastructure cleanup, IaC, documentation.</p>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-label">Technical Strengths</h2>
+                    <div class="skill-group">
+                        <p class="skill-group-name">Backend / Platform</p>
+                        <p class="skill-list">Python · FastAPI · Node.js · TypeScript · PostgreSQL · Redis · REST/GraphQL</p>
+                    </div>
+                    <div class="skill-group">
+                        <p class="skill-group-name">AI / Data Infrastructure</p>
+                        <p class="skill-list">ETL · embeddings · semantic search · retrieval · agent backends · Gemini API</p>
+                    </div>
+                    <div class="skill-group">
+                        <p class="skill-group-name">Cloud / Infrastructure</p>
+                        <p class="skill-list">AWS · GCP · Terraform · ECS · RDS · GCS · Vertex AI · Cloud Run · Docker · CI/CD</p>
+                    </div>
+                    <div class="skill-group">
+                        <p class="skill-group-name">Reliability</p>
+                        <p class="skill-list">Observability · monitoring · idempotency · production debugging</p>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-label">Credibility</h2>
+                    <ul class="item-list">
+                        <li>Ex-Meta Senior Software Engineer</li>
+                        <li>10x failure-rate reduction, Meta DTP</li>
+                        <li>Founding engineer, AI/data infrastructure</li>
+                        <li>100+ technical interviews conducted, Meta</li>
+                        <li>Tech Nation UK Global Talent</li>
+                        <li>BSc Computer Science, Moscow Institute of Physics &amp; Technology</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="section-label">Availability</h2>
+                    <p class="avail-text">
+                        Available for focused audits, hardening sprints, fractional senior engineering and high-priority backend / cloud reliability work.<br><br>
+                        Best first step: email a short description of the system, deadline and current pain point.<br>
+                        Day rate available on request.<br><br>
+                        <a href="mailto:hire@lxqu.dev">hire@lxqu.dev</a>
+                    </p>
+                </section>
+
+            </div><!-- /right col -->
+
+        </div><!-- /columns -->
+
+        <footer class="page-footer">
+            <a href="/Alex_Kulikov_CV_services.pdf" class="footer-link" download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="12" y1="12" x2="12" y2="18"/>
+                    <polyline points="9 15 12 18 15 15"/>
+                </svg>
+                download pdf
+            </a>
+            <a href="https://lxqu.dev/cv" class="footer-link" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                full career cv
+            </a>
+            <a href="https://lxqu.dev/" class="footer-link" target="_blank" rel="noopener noreferrer">lxqu.dev</a>
+        </footer>
+
+    </div><!-- /page -->
+
+</body>
+</html>
