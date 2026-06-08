@@ -501,6 +501,39 @@
             }
         }
 
+        /* ===== DESKTOP FLOATING BADGE ===== */
+        .desktop-cta {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 50;
+        }
+
+        .desktop-cta a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 300;
+            letter-spacing: 0.07em;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 0.65rem 1.1rem;
+            border: 1px solid var(--accent);
+            background: var(--bg);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .desktop-cta a:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        @media (max-width: 768px) {
+            .desktop-cta { display: none; }
+        }
+
         /* ===== ANIMATIONS ===== */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(8px); }
@@ -520,6 +553,10 @@
 
     <div class="mobile-cta" aria-label="Contact">
         <a href="mailto:hire@lxqu.dev">hire@lxqu.dev</a>
+    </div>
+
+    <div class="desktop-cta" aria-label="Contact">
+        <a href="mailto:hire@lxqu.dev">hire@lxqu.dev &rarr;</a>
     </div>
 
     <div class="page">
